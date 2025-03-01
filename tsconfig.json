@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "lib": ["ES2024"],
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "paths": {
+      "@primary/*": ["./src/adapters/primary/*"],
+      "@secondary/*": ["./src/adapters/secondary/*"],
+      "@hexagon/*": ["./src/hexagon/*"],
+      "@infrastructures/*": ["./src/infrastructures/*"],
+      "@test/*": ["./src/test/*"],
+      "@dependencies": ["./src/dependencies"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "typeRoots": [
+    "types",
+  ],
+}
+  
