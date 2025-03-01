@@ -9,6 +9,7 @@
     "baseUrl": ".",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "paths": {
       "@primary/*": ["./src/adapters/primary/*"],
       "@secondary/*": ["./src/adapters/secondary/*"],
