@@ -26,7 +26,7 @@ export class App {
 
   private initRoutes() {
     const router = Router();
-    router.use('/api', routes.map((route) => route.router));
+    router.use('/', routes.map((route) => route.router));
     this._app.use(router);
   }
 
