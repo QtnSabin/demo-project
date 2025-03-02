@@ -4,6 +4,7 @@ import { ConfigProvider } from '@hexagon/gateways/ConfigProvider';
 
 const KEYS = [
   'PORT',
+  'OPEN_WEATHER_API_KEY',
 ] as const;
 
 type Key = typeof KEYS[number];
@@ -28,6 +29,9 @@ export class DotEnvConfigProvider implements ConfigProvider {
 
     const config: SystemConfig = {
       port: this.getNumber('PORT'),
+      openWeather: {
+        apiKey: this.getString('OPEN_WEATHER_API_KEY'),
+      },
     };
 
     return config;
