@@ -18,4 +18,20 @@ export class WeatherRepositoryStub implements WeatherRepository {
     this._getByLatLongParams.push({ lat, long });
     return promisifyResult(() => this._getByLatLongData[`${lat}-${long}`]);
   }
+
+  public get getByCityParams() {
+    return this._getByCityParams;
+  }
+
+  public set getByCityData(data: Record<string, WeatherByCity>) {
+    this._getByCityData = data;
+  }
+
+  public get getByLatLongParams() {
+    return this._getByLatLongParams;
+  }
+
+  public set getByLatLongData(data: Record<string, WeatherByLatLong>) {
+    this._getByLatLongData = data;
+  }
 }
