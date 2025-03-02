@@ -3,6 +3,12 @@ import { FormatAndLogException } from '@hexagon/use-cases/format-and-log-excepti
 import { ExceptionHandlerMiddleware } from './ExceptionHandlerMiddleware';
 
 describe('Interception des exceptions', () => {
+  let exceptionHandlerMiddleware: ExceptionHandlerMiddleware;
+
+  beforeEach(() => {
+    exceptionHandlerMiddleware = new ExceptionHandlerMiddleware();
+  });
+
   test('Doit renvoyer une réponse json', async () => {
     const req: Request = {
       body: {},
@@ -21,7 +27,6 @@ describe('Interception des exceptions', () => {
     const error = new Error();
 
     FormatAndLogException.prototype.execute = jest.fn(FormatAndLogException.prototype.execute);
-    const exceptionHandlerMiddleware = new ExceptionHandlerMiddleware();
     exceptionHandlerMiddleware.handle(error, req, res, next);
 
     expect(res.json).toHaveBeenCalledWith({ message: 'An error has occurred', type: 'unknown_error' });
