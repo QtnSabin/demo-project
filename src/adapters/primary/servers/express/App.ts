@@ -2,6 +2,7 @@ import { dependencies } from '@dependencies';
 import express, { Application, Router } from 'express';
 import { Server } from 'http';
 import routes from './routes';
+import { ExceptionHandlerMiddleware } from './middlewares/exception-handler/ExceptionHandlerMiddleware';
 
 export class App {
   private _app!: Application;
@@ -13,6 +14,9 @@ export class App {
     this._app = express();
     this.initMiddlewares();
     this.initRoutes();
+
+    // Le middleware d'exception doit être défini après toutes les routes.
+    this._app.use(new ExceptionHandlerMiddleware().handle);
     this.listen();
   }
 
