@@ -1,17 +1,18 @@
 import { dependencies } from '@dependencies';
-import express, { Application } from 'express';
+import express, { Application, Router } from 'express';
+import { Server } from 'http';
+import routes from './routes';
 
 export class App {
   private _app!: Application;
+  private _server!: Server;
 
-  public constructor(
-    private _controllers: Array<any>,
-  ) {}
+  public constructor() {}
 
   public initServer() {
     this._app = express();
     this.initMiddlewares();
-    this.initControllers();
+    this.initRoutes();
     this.listen();
   }
 
@@ -19,14 +20,22 @@ export class App {
     this._app.use(express.json());
   }
 
-  private initControllers() {
-    this._app.post('/test', (req, res) => {
-      res.send('Hello');
-    });
+  private initRoutes() {
+    const router = Router();
+    router.use('/api', routes.map((route) => route.router));
+    this._app.use(router);
   }
 
   private listen() {
-    this._app.listen(dependencies.config.port);
-    console.info(`Server is running on PORT ${dependencies.config.port}`);
+    this._server = this._app.listen(dependencies.config.port);
+    dependencies.logProvider.info(`Server is running on PORT ${dependencies.config.port}`);
+  }
+
+  public get app() {
+    return this._app;
+  }
+
+  public get server() {
+    return this._server;
   }
 }
