@@ -9,8 +9,8 @@ export interface WeatherRepository {
   getByCity(city: string): Promise<WeatherByCity>
   /**
    * Récupère la météo à partir de coordonnés
-   * @param lat Latitude
-   * @param long Longitude
+   * @param latitude Latitude
+   * @param longitude Longitude
    */
-  getByLatLong(lat: number, long: number): Promise<WeatherByLatLong>
+  getByLatLong(latitude: number, longitude: number): Promise<WeatherByLatLong>
 }

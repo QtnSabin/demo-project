@@ -27,7 +27,20 @@ export class OpenWeatherRepository implements WeatherRepository {
     };
   }
 
-  public async getByLatLong(lat: number, long: number): Promise<WeatherByLatLong> {
-    throw new Error('Method not implemented.');
+  public async getByLatLong(latitude: number, longitude: number): Promise<WeatherByLatLong> {
+    const { body: result } = await this._restApiProvider.get<OpenWeatherResponse>(BASE_URL, {
+      lat: latitude,
+      long: longitude,
+      appId: this._apiKey,
+      ...this._options,
+    });
+
+    return {
+      latitude: result.coord.lat,
+      longitude: result.coord.lon,
+      description: result.weather[0].description,
+      humidity: result.main.humidity,
+      temperature: result.main.temp,
+    };
   }
 }

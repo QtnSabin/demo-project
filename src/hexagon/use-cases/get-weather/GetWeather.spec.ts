@@ -37,21 +37,21 @@ describe('Récupération de la météo', () => {
   test('Doit récupérer la météo par latitude et longitude', async () => {
     const data: GetWeatherPayload = {
       lat: 4.89,
-      long: 19.4,
+      lng: 19.4,
     };
     const defaultWeather: WeatherByLatLong = {
       latitude: data.lat,
-      longitude: data.long,
+      longitude: data.lng,
       description: 'Nuageux',
       humidity: 50.3,
       temperature: 6.3,
     };
     weatherRepository.getByLatLongData = {
-      [`${data.lat}-${data.long}`]: defaultWeather,
+      [`${data.lat}-${data.lng}`]: defaultWeather,
     };
 
     const response = await getWeather.execute(data);
-    expect(weatherRepository.getByLatLongParams).toEqual([{ lat: data.lat, long: data.long }]);
+    expect(weatherRepository.getByLatLongParams).toEqual([{ latitude: data.lat, longitude: data.lng }]);
     expect(weatherRepository.getByCityParams).toEqual([]);
     expect(response).toEqual(defaultWeather);
   });

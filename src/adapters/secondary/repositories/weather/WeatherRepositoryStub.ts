@@ -14,9 +14,9 @@ export class WeatherRepositoryStub implements WeatherRepository {
     return promisifyResult(() => this._getByCityData[city]);
   }
 
-  public async getByLatLong(lat: number, long: number): Promise<WeatherByLatLong> {
-    this._getByLatLongParams.push({ lat, long });
-    return promisifyResult(() => this._getByLatLongData[`${lat}-${long}`]);
+  public async getByLatLong(latitude: number, longitude: number): Promise<WeatherByLatLong> {
+    this._getByLatLongParams.push({ latitude, longitude });
+    return promisifyResult(() => this._getByLatLongData[`${latitude}-${longitude}`]);
   }
 
   public get getByCityParams() {

@@ -2,7 +2,7 @@ import { dependencies } from '@dependencies';
 import { RestApiProviderStub } from '@infrastructures/rest-api/RestApiProviderStub';
 import { BASE_URL, OpenWeatherRepository } from './OpenWeatherRepository';
 
-describe('Récupération de la météo par ville', () => {
+describe('Récupération de la météo par latitude et longitude', () => {
   const restApiProvider = dependencies.restApiProvider as RestApiProviderStub;
   let openWeatherRepository: OpenWeatherRepository;
 
@@ -35,11 +35,12 @@ describe('Récupération de la météo par ville', () => {
   });
 
   test('Doit envoyer les paramètres lors de la récupération de la météo', async () => {
-    await openWeatherRepository.getByCity('Paris');
+    await openWeatherRepository.getByLatLong(42, 56.4);
     expect(restApiProvider.getParams).toEqual([{
       url: BASE_URL,
       params: {
-        q: 'Paris',
+        lat: 42,
+        long: 56.4,
         appId: API_KEY,
         lang: 'fr',
         units: 'metric',
@@ -48,9 +49,10 @@ describe('Récupération de la météo par ville', () => {
   });
 
   test('Doit récupérer la météo au bon format', async () => {
-    const result = await openWeatherRepository.getByCity('Paris');
+    const result = await openWeatherRepository.getByLatLong(42, 56.4);
     expect(result).toEqual({
-      city: defaultOpenWeatherResponse.name,
+      latitude: defaultOpenWeatherResponse.coord.lat,
+      longitude: defaultOpenWeatherResponse.coord.lon,
       temperature: defaultOpenWeatherResponse.main.temp,
       humidity: defaultOpenWeatherResponse.main.humidity,
       description: defaultOpenWeatherResponse.weather[0].description,
@@ -72,7 +74,7 @@ describe('Récupération de la météo par ville', () => {
       },
     };
 
-    const result = await openWeatherRepository.getByCity('Paris');
+    const result = await openWeatherRepository.getByLatLong(42, 56.4);
     expect(result.description).toEqual(manyWeatherResponse.weather[0].description);
   });
 });
