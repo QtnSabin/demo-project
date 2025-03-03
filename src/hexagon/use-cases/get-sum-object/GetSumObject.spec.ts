@@ -1,15 +1,15 @@
-import { GetTotalNumber } from './GetTotalNumber';
+import { GetSumObject } from './GetSumObject';
 
 describe('Additionne les nombres dans une structure JSON', () => {
-  let getTotalNumber: GetTotalNumber;
+  let getSumObject: GetSumObject;
 
   beforeEach(() => {
-    getTotalNumber = new GetTotalNumber();
+    getSumObject = new GetSumObject();
   });
 
   test('Doit renvoyer la valeur d\'un seul nombre', () => {
     const data = { a: 2 };
-    expect(getTotalNumber.execute(data)).toEqual(2);
+    expect(getSumObject.execute(data)).toEqual(2);
   });
 
   test.each([
@@ -20,17 +20,17 @@ describe('Additionne les nombres dans une structure JSON', () => {
     {},
   ])('Doit renvoyer 0 pour la valeur "%s"', (value) => {
     const data = { a: value };
-    expect(getTotalNumber.execute(data)).toEqual(0);
+    expect(getSumObject.execute(data)).toEqual(0);
   });
 
   test('Doit additionner les nombres dans une structure imbriqué', () => {
     const data = { a: 1, b: { c: 2 } };
-    expect(getTotalNumber.execute(data)).toEqual(3);
+    expect(getSumObject.execute(data)).toEqual(3);
   });
 
   test('Doit additionner les nombres dans un tableau', () => {
     const data = { a: [1, 2] };
-    expect(getTotalNumber.execute(data)).toEqual(3);
+    expect(getSumObject.execute(data)).toEqual(3);
   });
 
   test('Doit additionner les nombres dans une structures complexe', () => {
@@ -45,6 +45,6 @@ describe('Additionne les nombres dans une structure JSON', () => {
       },
       g: [1, 2, { h: 4 }],
     };
-    expect(getTotalNumber.execute(data)).toEqual(23);
+    expect(getSumObject.execute(data)).toEqual(23);
   });
 });

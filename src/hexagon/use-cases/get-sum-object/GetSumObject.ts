@@ -1,4 +1,4 @@
-export class GetTotalNumber {
+export class GetSumObject {
   public constructor() {}
 
   public execute(data: Record<string, unknown>) {
