@@ -1,9 +1,12 @@
 import { dependencies } from '@dependencies';
 import { RestApiProviderStub } from '@infrastructures/rest-api/RestApiProviderStub';
+import { LogProviderStub } from '@secondary/gateways/log-provider/LogProviderStub';
+import { WeatherException } from '@hexagon/exceptions/http/WeatherException';
 import { BASE_URL, OpenWeatherRepository } from './OpenWeatherRepository';
 
 describe('Récupération de la météo par latitude et longitude', () => {
   const restApiProvider = dependencies.restApiProvider as RestApiProviderStub;
+  const logProvider = dependencies.logProvider as LogProviderStub;
   let openWeatherRepository: OpenWeatherRepository;
 
   const API_KEY = 'api_key';
@@ -23,7 +26,7 @@ describe('Récupération de la météo par latitude et longitude', () => {
   };
 
   beforeEach(() => {
-    openWeatherRepository = new OpenWeatherRepository(restApiProvider, API_KEY, { lang: 'fr', units: 'metric' });
+    openWeatherRepository = new OpenWeatherRepository(restApiProvider, logProvider, API_KEY, { lang: 'fr', units: 'metric' });
 
     // Données par défaut
     restApiProvider.getData = {
@@ -76,5 +79,34 @@ describe('Récupération de la météo par latitude et longitude', () => {
 
     const result = await openWeatherRepository.getByLatLong(42, 56.4);
     expect(result.description).toEqual(manyWeatherResponse.weather[0].description);
+  });
+
+  test('Doit envoyer un log d\'erreur en cas d\'erreur', async () => {
+    const error = new Error('erreur');
+    restApiProvider.getAction = () => {
+      throw error;
+    };
+
+    const execute = () => openWeatherRepository.getByLatLong(42, 56.4);
+    await expect(execute()).rejects.toThrow(Error);
+    expect(logProvider.errorParams).toEqual([{ message: error }]);
+  });
+
+  test('Doit intercepter l\'erreur HTTP OpenWeather', async () => {
+    const mockError = {
+      response: {
+        data: {
+          cod: 401,
+          message: 'Invalid API key',
+        },
+      },
+    };
+
+    restApiProvider.getAction = () => {
+      throw mockError;
+    };
+
+    const execute = () => openWeatherRepository.getByLatLong(42, 56.4);
+    await expect(execute()).rejects.toThrow(WeatherException);
   });
 });

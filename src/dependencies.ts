@@ -18,6 +18,7 @@ const logProvider = isTest ? new LogProviderStub() : new ConsoleLogProvider(date
 const restApiProvider = isTest ? new RestApiProviderStub() : new AxiosRestApiProvider();
 const weatherRepository = isTest ? new WeatherRepositoryStub() : new OpenWeatherRepository(
   restApiProvider,
+  logProvider,
   config.openWeather.apiKey,
   { lang: 'fr', units: 'metric' },
 );
