@@ -30,7 +30,7 @@ export class OpenWeatherRepository implements WeatherRepository {
   public async getByLatLong(latitude: number, longitude: number): Promise<WeatherByLatLong> {
     const { body: result } = await this._restApiProvider.get<OpenWeatherResponse>(BASE_URL, {
       lat: latitude,
-      long: longitude,
+      lon: longitude,
       appId: this._apiKey,
       ...this._options,
     });

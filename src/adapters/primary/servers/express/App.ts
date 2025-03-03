@@ -16,7 +16,7 @@ export class App {
     this.initRoutes();
 
     // Le middleware d'exception doit être défini après toutes les routes.
-    this._app.use(new ExceptionHandlerMiddleware().handle);
+    this._app.use(new ExceptionHandlerMiddleware().handler());
     this.listen();
   }
 

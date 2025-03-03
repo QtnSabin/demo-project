@@ -40,7 +40,7 @@ describe('Récupération de la météo par latitude et longitude', () => {
       url: BASE_URL,
       params: {
         lat: 42,
-        long: 56.4,
+        lon: 56.4,
         appId: API_KEY,
         lang: 'fr',
         units: 'metric',

@@ -15,4 +15,8 @@ export class ExceptionHandlerMiddleware {
     res.json(result.response.content);
     next(err);
   }
+
+  public handler() {
+    return this.handle.bind(this);
+  }
 }
