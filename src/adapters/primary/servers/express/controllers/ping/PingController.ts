@@ -4,7 +4,7 @@ import { Controller } from '../Controller';
 export class PingController implements Controller {
   public basePath = '/ping';
 
-  public ping(req: Request, res: Response) {
+  public get(req: Request, res: Response) {
     res.send(true);
   }
 }

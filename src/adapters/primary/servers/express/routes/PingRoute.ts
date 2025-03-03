@@ -7,6 +7,6 @@ export class PingRoute extends Route<typeof PingController> {
   }
 
   protected setRoutes(): void {
-    this.router.get(this.controller.basePath, this.controller.ping);
+    this.router.get(this.controller.basePath, this.controller.get);
   }
 }
