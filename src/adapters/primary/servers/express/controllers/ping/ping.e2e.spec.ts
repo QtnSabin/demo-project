@@ -12,7 +12,7 @@ describe('Envoie d\'un ping', () => {
   });
 
   test('Doit renvoyer true', async () => {
-    const response = await request(app.app).get('/api/ping');
+    const response = await request(app.app).get('/ping');
     expect(response.status).toEqual(200);
     expect(response.body).toEqual(true);
   });
