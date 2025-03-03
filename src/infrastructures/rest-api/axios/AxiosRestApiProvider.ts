@@ -12,6 +12,16 @@ export class AxiosRestApiProvider implements RestApiProvider {
     return this.mapResponse(response);
   }
 
+  public async post<T>(
+    url: string,
+    payload?: any,
+    params?: Record<string, unknown>,
+    headers?: Record<string, string>,
+  ): Promise<RestApiResponse<T>> {
+    const response: AxiosResponse<T> = await axios.post(url + this.joinParams(params), payload, { headers });
+    return this.mapResponse(response);
+  }
+
   private mapResponse<T>(response: AxiosResponse<T>): RestApiResponse<T> {
     return {
       status: response.status,

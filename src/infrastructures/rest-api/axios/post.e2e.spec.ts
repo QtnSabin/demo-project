@@ -4,18 +4,21 @@ import { AxiosRestApiProvider } from './AxiosRestApiProvider';
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe('Appel de la méthode GET de axios', () => {
+describe('Appel de la méthode POST de axios', () => {
   let restApiProvider: AxiosRestApiProvider;
 
   beforeEach(() => {
     restApiProvider = new AxiosRestApiProvider();
   });
 
-  test('Doit appeler axios.get avec les paramètres formattés', async () => {
+  test('Doit appeler axios.post avec les paramètres formattés', async () => {
     const url = 'https://example.com';
     const params = {
       key1: 'value1',
       key2: 'value2',
+    };
+    const payload = {
+      mail: 'mail@mail.com',
     };
     const headers = { Authorization: 'Bearer token' };
     const mockResponse = {
@@ -23,11 +26,12 @@ describe('Appel de la méthode GET de axios', () => {
       data: { result: 'success' },
     };
 
-    mockedAxios.get.mockResolvedValue(mockResponse);
+    mockedAxios.post.mockResolvedValue(mockResponse);
 
-    const result = await restApiProvider.get(url, params, headers);
-    expect(mockedAxios.get).toHaveBeenCalledWith(
+    const result = await restApiProvider.post(url, payload, params, headers);
+    expect(mockedAxios.post).toHaveBeenCalledWith(
       `${url}?key1=value1&key2=value2`,
+      payload,
       { headers },
     );
     expect(result.status).toEqual(mockResponse.status);
@@ -41,9 +45,9 @@ describe('Appel de la méthode GET de axios', () => {
       data: { result: 'success' },
     };
 
-    mockedAxios.get.mockResolvedValue(mockResponse);
-    const result = await restApiProvider.get(url);
-    expect(mockedAxios.get).toHaveBeenCalledWith(url, {});
+    mockedAxios.post.mockResolvedValue(mockResponse);
+    const result = await restApiProvider.post(url);
+    expect(mockedAxios.post).toHaveBeenCalledWith(url, undefined, {});
     expect(result.status).toEqual(mockResponse.status);
     expect(result.body).toEqual(mockResponse.data);
   });
