@@ -10,17 +10,7 @@ Pour l'architecture principale de l'API, j'ai choisi d'utiliser une architecture
 - Testabilité : Le cœur métier doit pouvoir être testé facilement.
 
 ## Structure des dossiers
-📦 src/
- ┣ 📂 adapters/         # Adaptateurs pour interagir avec l'extérieur
- ┃ ┣ 📂 primary/        # Entrées de l'application (ex: API, CLI)
- ┃ ┗ 📂 secondary/      # Sorties de l'application (ex: DB, services externes)
- ┣ 📂 hexagon/          # Contient la logique métier pure
- ┃ ┣ 📂 gateways/       # Les passerelles sont les représentations des implémentations techniques
- ┃ ┣ 📂 models/         # Entités métier
- ┃ ┣ 📂 repositories/   # Les repositories sont les représentations des implémentations techniques de gestion des données
- ┃ ┗ 📂 use-cases/      # Les cas d'utilisation (logique métier applicative)
- ┣ 📂 infrastructures/  # Implémentations techniques des dépendances externes utilisées par l'application (databaseProvider, restApiProvider...)  
- ┗ 📜 index.ts          # Point d'entrée de l'application
+![Structure des dossiers](./structure_dossiers.png)
 
 J'ai bien conscience que pour un projet comme celui-ci, ce choix de design pattern est overkill, mais dans le cadre d'un projet visant à tester mes compétences, c'est ce qui me permet de restituer au mieux l'expérience que j'ai acquise. C'est également un design pattern sur lequel j'aime particulièrement travailler grâce à son découpage logique qui s'adapte naturellement avec une approche TDD en plus d'offrir une sécurité dans l'utilisation des librairies JS qui évoluent et changent souvent.
 
