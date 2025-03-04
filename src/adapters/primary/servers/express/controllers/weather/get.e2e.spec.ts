@@ -101,6 +101,24 @@ describe('Récupération de la météo', () => {
         }),
       );
     });
+
+    test('Ne doit pas accepter un paramètre inconnu', async () => {
+      const response = await request(app.app).get(`${url}?inconnu=1`);
+      expect(response.status).toEqual(422);
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          details: {
+            issues: expect.arrayContaining([{
+              code: 'unrecognized_keys',
+              keys: ['inconnu'],
+              message: 'Unrecognized key(s) in object: \'inconnu\'',
+              path: [],
+            }]),
+            name: 'ZodError',
+          },
+        }),
+      );
+    });
   });
 
   describe('Récupération de la météo', () => {
